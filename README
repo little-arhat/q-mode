@@ -1,1 +1,33 @@
 kdbp-mode + q-minor-mode combined for easy installation via el-get
+
+installation:
+
+To improve your expirience with el-get, i recommend to use following
+macro (by @piranha):
+
+(defmacro el-get-add (item)
+  `(add-to-list 'el-get-sources ',item))
+
+1) in case `q-mode` recipe will be included in el-get recipe base
+add following lines in your .emacs file:
+
+(el-get-add
+  (:name q-mode))
+
+
+2) Otherwise, use more verbose definition:
+
+   (:name q-mode
+       :type git
+       :url "git://github.com/little-arhat/q-mode.git"
+       :features ("q-minor-mode" "kdbp-mode")
+       :after
+       (lambda ()
+         (add-to-list 'auto-mode-alist '("\\.[kq]$" . kdbp-mode))
+         (autoload 'q-mode "q-mode")
+         (autoload 'q-help "q-mode")
+         (autoload 'run-q "q-mode")
+         (autoload 'kdbp-mode "kdbp-mode")))
+
+
+
